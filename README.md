@@ -37,12 +37,12 @@ Clone o repositório:
 
 bash
 Copiar código
-git clone xpto
+git clone [QuarkusAgViagem](https://github.com/caxeta/QuarkusAgViagem.git)
 Navegue para o diretório do projeto:
 
 bash
 Copiar código
-cd xpto
+cd QuarkusAgViagem
 Compile o projeto e inicie o servidor de desenvolvimento:
 
 bash
