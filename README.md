@@ -37,7 +37,7 @@ Clone o repositório:
 
 bash
 Copiar código
-git clone [QuarkusAgViagem](https://github.com/caxeta/QuarkusAgViagem.git)
+git clone [QuarkusAgViagem](https://github.com/caxeta/quarkus_viagem.git)
 Navegue para o diretório do projeto:
 
 bash
