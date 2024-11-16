@@ -22,6 +22,13 @@ public class FlightResource {
         return Flight.findById(id);
     }
 
+    @GET
+    @Path("/findByTravelOrderId/{travelOrderId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Flight findByTravelOrderId(@PathParam("travelOrderId") Long travelOrderId){
+        return Flight.findByTravelOrderId(travelOrderId);
+    }
+
     @Transactional
     @POST
     @Produces(MediaType.APPLICATION_JSON)

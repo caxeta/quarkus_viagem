@@ -6,7 +6,10 @@ import jakarta.persistence.Entity;
 @Entity
 public class Hotel extends PanacheEntity {
     public Long id;
-    private String travelorderid;
-    private String nights;
+    public Long travelOrderId;
+    public Long nights;
 
+    public static Hotel findByTravelOrderId(Long travelOrderId) {
+        return find("travelOrderId", travelOrderId).firstResult();
+    }
 }

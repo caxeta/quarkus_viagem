@@ -9,4 +9,7 @@ public class Flight extends PanacheEntity {
     public String toAirport;
     public Long travelOrderId;
 
+    public static Flight findByTravelOrderId(Long travelOrderId) {
+        return find("travelOrderId", travelOrderId).firstResult();
+    }
 }
