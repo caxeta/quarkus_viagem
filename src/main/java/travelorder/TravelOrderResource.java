@@ -11,7 +11,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static io.quarkus.arc.impl.UncaughtExceptions.LOGGER;
 
 
 @Path("travelorder/")
@@ -30,22 +31,36 @@ public class TravelOrderResource extends PanacheEntity {
                 .stream()
                 .map(order -> {
                     Flight flight = flightResource.findByTravelOrderId(order.id);
+                    if (flight == null) {
+                        LOGGER.error("Flight is null for TravelOrder ID: " + order.id);
+                    }
                     Hotel hotel = hotelResource.findByTravelOrderId(order.id);
+                    if (hotel == null) {
+                        LOGGER.error("Hotel is null for TravelOrder ID: " + order.id);
+                    }
                     return TravelOrderDTO.of(
                             order,
-                            flight != null ? flight : new Flight(),  // Passar valores padrão
-                            hotel != null ? hotel : new Hotel()            // Passar valores padrão
+                            flight != null ? flight : new Flight(),
+                            hotel != null ? hotel : new Hotel()
                     );
                 })
-                .collect(Collectors.toList());
+                .toList();
     }
 
 
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public TravelOrder findById(@PathParam("id") Long id) {
-        return TravelOrder.findById(id);
+    public TravelOrderDTO findById(@PathParam("id") Long id) {
+
+        TravelOrder travelOrder = TravelOrder.findById(id);
+        Flight flight = flightResource.findByTravelOrderId(travelOrder.id);
+        Hotel hotel = hotelResource.findByTravelOrderId(travelOrder.id);
+        return TravelOrderDTO.of(
+                travelOrder,
+                flight != null ? flight : new Flight(),
+                hotel != null ? hotel : new Hotel()
+        );
     }
 
     @Transactional
