@@ -15,10 +15,11 @@ Clone o repositório:
 
 Copiar código
 git clone https://github.com/caxeta/quarkus_viagem.git
+
 cd QuarkusAgViagem
 
 Inicie em modo de desenvolvimento:
-Copiar código
+
 ```shell script
 mvn quarkus:dev
 ```
