@@ -11,12 +11,7 @@ Projeto desenvolvido para explorar a transição de uma arquitetura monolítica 
 * Postman ou curl: Para testes de API.
 
 ## Instalação e Execução
-Clone o repositório:
-
-Copiar código
-git clone https://github.com/caxeta/quarkus_viagem.git
-
-cd QuarkusAgViagem
+Clone o repositório: git clone https://github.com/caxeta/quarkus_viagem.git
 
 Inicie em modo de desenvolvimento:
 
