@@ -1,4 +1,4 @@
-# code-with-quarkus
+# Code With Quarkus
 
 QuarkusAgViagem
 Projeto desenvolvido para explorar a transição de uma arquitetura monolítica para uma baseada em microsserviços utilizando o framework Quarkus. Parte da masterclass "Mono2Micro" de Elder Moraes, com foco em escalabilidade e modularidade.
@@ -25,7 +25,7 @@ mvn quarkus:dev
 ```
 Acesse a aplicação: http://localhost:8080
 
-# Licença
+## Licença
 Este projeto é licenciado sob a Licença Apache 2.0. Consulte o arquivo LICENSE para mais detalhes.
 
 text
