@@ -9,15 +9,15 @@ Maven: Para gerenciamento de dependências.
 Docker (opcional): Para serviços auxiliares.
 Git: Para clonar o repositório.
 Postman ou curl: Para testes de API.
-Instalação e Execução
+
+## Instalação e Execução
 Clone o repositório:
 
-bash
 Copiar código
 git clone https://github.com/caxeta/quarkus_viagem.git
 cd QuarkusAgViagem
+
 Inicie em modo de desenvolvimento:
-bash
 Copiar código
 ```shell script
 mvn quarkus:dev
