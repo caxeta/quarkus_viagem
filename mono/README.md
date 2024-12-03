@@ -24,10 +24,6 @@ mvn quarkus:dev
 ```
 Acesse a aplicação: http://localhost:8080
 
-Modos de Execução:
-Monolítico: Execute a versão completa em um único módulo.
-Microsserviços: Consulte o diretório microservices para instruções específicas de execução de cada serviço.
-
 # Licença
 Este projeto é licenciado sob a Licença Apache 2.0. Consulte o arquivo LICENSE para mais detalhes.
 
