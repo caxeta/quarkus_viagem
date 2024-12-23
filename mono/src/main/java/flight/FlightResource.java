@@ -1,25 +1,31 @@
 package flight;
 
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
 import java.util.List;
 
+import static io.quarkus.hibernate.orm.panache.PanacheEntityBase.*;
+
 @Path("/flights")
 public class FlightResource {
+
+    @Inject
+    Flight flight;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Flight> getFlights(){
-        return Flight.listAll();
+        return listAll();
     }
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Flight getFlight(@PathParam("id") Long id){
-        return Flight.findById(id);
+        return findById(id);
     }
 
     @GET
@@ -35,7 +41,7 @@ public class FlightResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Flight newFlight(Flight flight){
         flight.id = null;
-        flight.persist(flight);
+        persist(flight);
         return flight;
     }
 }

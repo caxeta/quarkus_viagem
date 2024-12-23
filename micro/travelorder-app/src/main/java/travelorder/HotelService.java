@@ -2,24 +2,44 @@ package travelorder;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
+import hotel.Hotel;
 
+import java.time.temporal.ChronoUnit;
 
 @RegisterRestClient(baseUri = "http://localhost:8082/hotels")
 public interface HotelService {
-
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     @Path("/{id}")
-    Hotel getHotel(@PathParam("id") Long id);
+    @Produces(MediaType.APPLICATION_JSON)
+    public Hotel findById(@PathParam("id") Long id);
 
     @GET
+    @Path("findByTravelOrderId")
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/findByTravelOrderId/{travelOrderId}")
-    Hotel findByTravelOrderId(@PathParam("travelOrderId") Long travelOrderId);
+    @Timeout(unit = ChronoUnit.SECONDS, value = 2)
+    @Fallback(fallbackMethod = "fallback")
+    @CircuitBreaker(
+            requestVolumeThreshold = 4,
+            failureRatio = 0.5,
+            delay = 5000,
+            successThreshold = 2
+    )
+    public Hotel findByTravelOrderId(@QueryParam("travelOrderId") long travelOrderId);
 
-    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    Hotel newHotel(Hotel hotel);
+    @POST
+    public Hotel newHotel(Hotel hotel);
+
+    default Hotel fallback(long travelOrderId) {
+        Hotel hotel = new Hotel();
+        hotel.id = null;
+        hotel.travelOrderId = travelOrderId;
+        hotel.nights = -1L;
+        return hotel;
+    }
 }

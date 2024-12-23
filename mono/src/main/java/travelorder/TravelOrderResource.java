@@ -15,7 +15,7 @@ import java.util.List;
 import static io.quarkus.arc.impl.UncaughtExceptions.LOGGER;
 
 
-@Path("travelorder/")
+@Path("travelorders/")
 public class TravelOrderResource extends PanacheEntity {
 
     @Inject

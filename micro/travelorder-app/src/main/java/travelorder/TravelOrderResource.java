@@ -1,5 +1,7 @@
 package travelorder;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -8,20 +10,24 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import flight.Flight;
+import hotel.Hotel;
 
 import java.util.List;
 
 import static io.quarkus.arc.impl.UncaughtExceptions.LOGGER;
 
-
 @Path("travelorder/")
+@ApplicationScoped
 public class TravelOrderResource extends PanacheEntity {
 
+    @Inject
     @RestClient
-    FlightService flightService;
+    private FlightService flightService;
 
+    @Inject
     @RestClient
-    HotelService hotelResource;
+    private HotelService hotelService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -32,21 +38,26 @@ public class TravelOrderResource extends PanacheEntity {
                     Flight flight = flightService.findByTravelOrderId(order.id);
                     if (flight == null) {
                         LOGGER.error("Flight is null for TravelOrder ID: " + order.id);
-                        // Cria uma instância padrão de Flight
-                        flight = new Flight(null, 0L, "UNKNOWN", "UNKNOWN");
+                        flight = new Flight();
+                        flight.travelOrderId = order.id;
+                        flight.fromAirport = "defaultFromAirport";
+                        flight.toAirport = "defaultToAirport";
+                        flight.id = null;
                     }
 
-                    Hotel hotel = hotelResource.findByTravelOrderId(order.id);
+                    Hotel hotel = hotelService.findByTravelOrderId(order.id);
                     if (hotel == null) {
                         LOGGER.error("Hotel is null for TravelOrder ID: " + order.id);
-                        // Cria uma instância padrão de Hotel
-                        hotel = new Hotel(0L, order.id, 0L);
+                        hotel = new Hotel();
+                        hotel.travelOrderId = order.id;
+                        hotel.nights = -1L;
+                        hotel.id = null;
                     }
 
                     return new TravelOrderDTO(
-                            flight.fromAirport(),
-                            flight.toAirport(),
-                            hotel.nights()
+                            flight.fromAirport,
+                            flight.toAirport,
+                            hotel.nights
                     );
                 })
                 .toList();
@@ -54,13 +65,13 @@ public class TravelOrderResource extends PanacheEntity {
 
 
     @GET
-    @Path("{id}")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public TravelOrderDTO findById(@PathParam("id") Long id) {
 
         TravelOrder travelOrder = TravelOrder.findById(id);
-        travelorder.Flight flight = flightService.findByTravelOrderId(travelOrder.id);
-        travelorder.Hotel hotel = hotelResource.findByTravelOrderId(travelOrder.id);
+        Flight flight = flightService.findByTravelOrderId(travelOrder.id);
+        Hotel hotel = hotelService.findByTravelOrderId(travelOrder.id);
         return TravelOrderDTO.of(
                 travelOrder,
                 flight,
@@ -76,11 +87,16 @@ public class TravelOrderResource extends PanacheEntity {
         TravelOrder travelOrder = new TravelOrder();
         TravelOrder.persist(travelOrder);
 
-        travelorder.Flight flight = new travelorder.Flight(null, travelOrder.id, travelOrderDTO.toAirport(), travelOrderDTO.fromAirport());
+        Flight flight = new Flight();
+        flight.fromAirport = travelOrderDTO.fromAirport();
+        flight.toAirport = travelOrderDTO.toAirport();
+        flight.travelOrderId = travelOrder.id;
         flightService.newFlight(flight);
 
-        travelorder.Hotel hotel = new travelorder.Hotel(null, travelOrderDTO.nights(), travelOrder.id);
-        hotelResource.newHotel(hotel);
+        Hotel hotel = new Hotel();
+        hotel.travelOrderId = travelOrder.id;
+        hotel.nights = travelOrderDTO.nights();
+        hotelService.newHotel(hotel);
 
         return travelOrder;
     }

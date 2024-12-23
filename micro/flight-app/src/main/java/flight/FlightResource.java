@@ -1,5 +1,6 @@
 package flight;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -7,6 +8,7 @@ import jakarta.ws.rs.core.MediaType;
 import java.util.List;
 
 @Path("/flights")
+@ApplicationScoped
 public class FlightResource {
 
     @GET
