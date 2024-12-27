@@ -1,7 +1,6 @@
 package travelorder;
 
 import flight.Flight;
-import hotel.Hotel;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
@@ -11,7 +10,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import java.time.temporal.ChronoUnit;
 
-@RegisterRestClient(baseUri = "http://localhost:8081/flights")
+@RegisterRestClient(baseUri = "http://flight-app-analistacaxeta-dev.apps.rm3.7wse.p1.openshiftapps.com/flights")
 public interface FlightService {
     @GET
     @Path("/{id}")

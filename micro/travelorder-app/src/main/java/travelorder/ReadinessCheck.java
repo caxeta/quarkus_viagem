@@ -7,7 +7,7 @@ import org.eclipse.microprofile.health.Readiness;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 @Readiness
-public class ReadnessCheck implements HealthCheck {
+public class ReadinessCheck implements HealthCheck {
 
     @RestClient
     @Inject

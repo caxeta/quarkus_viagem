@@ -10,7 +10,7 @@ import hotel.Hotel;
 
 import java.time.temporal.ChronoUnit;
 
-@RegisterRestClient(baseUri = "http://localhost:8082/hotels")
+@RegisterRestClient(baseUri = "http://hotel-app-analistacaxeta-dev.apps.rm3.7wse.p1.openshiftapps.com/hotels")
 public interface HotelService {
     @GET
     @Path("/{id}")
