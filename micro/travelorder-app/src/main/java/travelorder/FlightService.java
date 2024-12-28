@@ -1,6 +1,5 @@
 package travelorder;
 
-import flight.Flight;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
@@ -15,32 +14,33 @@ public interface FlightService {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Flight findById(@PathParam("id") long id);
+    Flight findById(@PathParam("id") long id);
 
     @GET
-    @Path("findByTravelOrderId")
+    @Path("/findByTravelOrderId/{travelOrderId}")
     @Produces(MediaType.APPLICATION_JSON)
     @Timeout(unit = ChronoUnit.SECONDS, value = 2)
     @Fallback(fallbackMethod = "fallback")
     @CircuitBreaker(
             requestVolumeThreshold = 4,
-            failureRatio = 0.5,
+            failureRatio = 0.9,
             delay = 5000,
             successThreshold = 2
     )
-    public Flight findByTravelOrderId(@QueryParam("travelOrderId") long travelOrderId);
+    Flight findByTravelOrderId(@PathParam("travelOrderId") long travelOrderId);
 
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @POST
-    public Flight newFlight(Flight flight);
+    Flight newFlight(Flight flight);
 
+    @SuppressWarnings("unused")
     default Flight fallback(long travelOrderId){
         Flight flight = new Flight();
-        flight.id = null;
-        flight.travelOrderId = travelOrderId;
-        flight.fromAirport = "defaultFromAirport";
-        flight.toAirport = "defaultToAirport";
+        flight.setId(null);
+        flight.setTravelOrderId(travelOrderId);
+        flight.setFromAirport("defaultFromAirPort");
+        flight.setToAirport("defaultToAirPort");
         return flight;
     }
 }

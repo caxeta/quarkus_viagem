@@ -5,5 +5,4 @@ import jakarta.persistence.Entity;
 
 @Entity
 public class TravelOrder extends PanacheEntity {
-    public Long id;
 }
