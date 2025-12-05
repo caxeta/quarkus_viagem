@@ -1,16 +1,54 @@
-# React + Vite
+# Frontend - Sistema de Viagens
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é o frontend da aplicação de gestão de viagens, desenvolvido para proporcionar uma interface amigável para reserva de passagens aéreas e hotéis.
 
-Currently, two official plugins are available:
+## 🚀 Sobre
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+O objetivo deste painel é permitir que usuários:
+- Pesquisem e reservem voos disponíveis.
+- Consultem e reservem hospedagens (hotéis).
+- Gerenciem seus pedidos de viagem (Travel Orders).
 
-## React Compiler
+A aplicação conecta-se a microsserviços backend para realizar essas operações de forma integrada.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠 Tecnologias
 
-## Expanding the ESLint configuration
+- **React**: Biblioteca para construção da interface.
+- **Vite**: Ferramenta de build e servidor de desenvolvimento rápido.
+- **TypeScript**: Adiciona tipagem estática para maior segurança e manutenibilidade do código.
+- **CSS**: Estilização nativa para designs customizados.
+- **Axios**: Cliente HTTP para requisições às APIs.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📦 Como Executar
+
+### Pré-requisitos
+- Node.js (versão 20+ recomendada)
+- npm
+
+### Instalação e Execução
+
+1.  Instale as dependências do projeto:
+    ```bash
+    npm install
+    ```
+
+2.  Inicie o servidor de desenvolvimento local:
+    ```bash
+    npm run dev
+    ```
+    A aplicação estará disponível geralmente em `http://localhost:5173`.
+
+3.  Para gerar a versão de produção (build):
+    ```bash
+    npm run build
+    ```
+
+## 🔌 Integração com Backend
+
+O frontend utiliza um proxy configurado no Vite (`vite.config.ts`) para redirecionar as chamadas de API para os microsserviços locais:
+
+- **Voos**: `/api/flights` -> `http://localhost:8081`
+- **Hotéis**: `/api/hotels` -> `http://localhost:8082`
+- **Pedidos**: `/api/travelorder` -> `http://localhost:8083`
+
+Isso evita problemas de CORS durante o desenvolvimento.
