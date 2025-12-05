@@ -13,21 +13,21 @@ public class HotelResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Hotel> getHotels(){
+    public List<Hotel> getHotels() {
         return Hotel.listAll();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{id}")
-    public Hotel getHotel(@PathParam("id") Long id){
+    public Hotel getHotel(@PathParam("id") Long id) {
         return Hotel.findById(id);
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/findByTravelOrderId/{travelOrderId}")
-    public Hotel findByTravelOrderId(@PathParam("travelOrderId") Long travelOrderId){
+    public Hotel findByTravelOrderId(@PathParam("travelOrderId") Long travelOrderId) {
         return Hotel.findByTravelOrderId(travelOrderId);
     }
 
@@ -35,9 +35,9 @@ public class HotelResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Hotel newHotel(Hotel hotel){
+    public Hotel newHotel(Hotel hotel) {
         hotel.id = null;
-        hotel.persist(hotel);
+        Hotel.persist(hotel);
         return hotel;
     }
 }

@@ -5,7 +5,6 @@ public class Hotel {
     private Long travelOrderId;
     private Long nights;
 
-    @SuppressWarnings("unused")
     public Hotel() {
     }
 
