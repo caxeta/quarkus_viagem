@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 
 @Entity
 public class Hotel extends PanacheEntity {
-    public Long id;
+
     public Long travelOrderId;
     public Long nights;
 
